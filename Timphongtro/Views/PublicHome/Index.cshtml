@@ -1,0 +1,191 @@
+﻿@using QuanLyKhachSan.Models
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+}
+
+<div class="hero-wrap js-fullheight" style="background-image: url('https://diamondcrownhaiphong.info/uploads/46ed5b07-fa82-47ba-81a9-e3653f298ce9.png');height : 200px !important ">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+            <div class="col-md-9 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"> Chào mừng bạn đến với Timphong</h1>
+
+                <div class="block-17 my-4">
+                    <form action="/PublicRoom/Search" method="post" class="d-block d-flex">
+                        <div class="fields d-block d-flex">
+                            <div class="textfield-search one-third">
+                                <input type="text" name="name" class="form-control" placeholder="Ví dụ: phòng 313">
+                            </div>
+                            <div class="select-wrap one-third">
+                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                <select name="cityCode" id="cityCode" class="form-control" placeholder="Tỉnh/Thành phố">
+                                    <option value="0" selected>Tỉnh/Thành phố</option>
+                                    @foreach (var item in (List<City>)ViewBag.ListCity)
+                                    {
+                                        <option value="@item.Code">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="select-wrap one-third">
+                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                <select name="districtId" id="districtId" class="form-control" placeholder="Quận/Huyện">
+                                    <option value="0" selected>Quận/Huyện</option>
+                                </select>
+                            </div> 
+                        </div>
+                        <input type="submit" class="search-submit btn btn-primary" value="Tìm kiếm">
+                    </form>
+                </div>
+               @* <p>Or browse the highlights</p>
+                <p class="browse d-md-flex">
+                    <span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-fork"></i>Restaurant</a></span>
+                    <span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-hotel"></i>Hotel</a></span>
+                    <span class="d-flex justify-content-md-center align-items-md-center"><a href="#"><i class="flaticon-meeting-point"></i>Places</a></span>
+                    <span class="d-flex justify-content-md-center align-items-md-	center"><a href="#"><i class="flaticon-shopping-bag"></i>Shopping</a></span>
+                </p>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row justify-content-start mb-5 pb-3">
+            <div class="col-md-7 heading-section ftco-animate">
+                <span class="subheading"></span>
+                <h2 class="mb-4">Phòng có lượt xem nhiều</h2>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var item in ViewBag.ListRoomTop5)
+            {
+            <div class="col-md-4">
+                <div class="destination">
+                    <a href="/PublicRoom/DetailRoom/@item.idRoom">
+                        <img width="380px" class="img img-2 d-flex justify-content-center align-items-center" src="/Content/images/@item.image">
+
+                    </a>
+                    <div class="text p-3">
+                        <div class="d-flex">
+                            <div class="one">
+                                <h3><a href="/PublicRoom/DetailRoom/@item.idRoom">@item.name</a></h3>
+                                <p class="rate">
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <span>@item.view lượt xem</span>
+                                </p>
+                            </div>
+
+                            @{
+                                int price1 = item.cost - item.cost * item.discount / 100;
+                            }
+
+                        </div>
+                        @*   <p>Far far away, behind the word mountains, far from the countries</p>*@
+                        <p class="days"><span>@item.Type.name</span></p>
+                        <hr>
+                        <p class="bottom-area d-flex">
+                            <span>Giá phòng : @price1 VNĐ</span>
+                            <span class="ml-auto"><a href="/PublicRoom/DetailRoom/@item.idRoom">Xem chi tiết</a></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section" style="margin-top : -60px !important">
+    <div class="container">
+        <div class="row justify-content-start mb-5 pb-3">
+            <div class="col-md-7 heading-section ftco-animate">
+                <span class="subheading"></span>
+                <h2 class="mb-4">Phòng giảm giá</h2>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var item in ViewBag.ListRoomDiscount)
+            {
+            <div class="col-md-4">
+                <div class="destination">
+                    <a href="/PublicRoom/DetailRoom/@item.idRoom">
+                        <img width="380px" class="img img-2 d-flex justify-content-center align-items-center" src="/Content/images/@item.image">
+
+                    </a>
+                    <div class="text p-3">
+                        <div class="d-flex">
+                            <div class="one">
+                                <h3><a href="/PublicRoom/DetailRoom/@item.idRoom">@item.name</a></h3>
+                                <p class="rate">
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <i class="icon-star"></i>
+                                    <span>@item.view lượt xem</span>
+                                </p>
+                            </div>
+
+                            @{
+                                int price1 = item.cost - item.cost * item.discount / 100;
+                            }
+
+                        </div>
+                        @*   <p>Far far away, behind the word mountains, far from the countries</p>*@
+                        <p class="days"><span>@item.Type.name</span></p>
+                        <hr>
+                        <p class="bottom-area d-flex">
+                            <span>Giá phòng : @price1 VNĐ</span>
+                            <span class="ml-auto"><a href="/PublicRoom/DetailRoom/@item.idRoom">Xem chi tiết</a></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            }
+         
+        </div>
+    </div>
+</section>
+
+@*<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row justify-content-start mb-5 pb-3">
+            <div class="col-md-7 heading-section ftco-animate">
+               
+                <h2>Những dịch vụ của khách sạn</h2>
+            </div>
+        </div>
+        <div class="row d-flex">
+            @foreach (var item in ViewBag.ListService)
+            {
+                <div class="col-md-3 d-flex ftco-animate">
+                    <div class="blog-entry align-self-stretch">
+                        <a href="#" class="block-20" style="background-image: url('https://static.vecteezy.com/system/resources/previews/000/633/178/non_2x/vector-hotel-service-icons.jpg');width : 380px !important">
+                        </a>
+                        <div class="text p-4 d-block">
+                            <h3 class="heading mt-3"><a href="#">@item.name</a></h3>
+                            <div class="meta mb-3">
+                                <div>@item.cost VNĐ</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+          
+        </div>
+    </div>
+</section>*@
+
+
